@@ -192,6 +192,9 @@ def train(strategy, q_file_name, params_file_name):
 
 # parse through the command line argument, which should be "epsilon_greedy" or "softmax" depending on which
 # strategy the user would like to use
+if len(sys.argv) == 1:
+    print("No command line argument was given.")
+    sys.exit()
 if sys.argv[1] == 'epsilon_greedy':
     strategy = epsilon_greedy_strategy
     q_file = 'q_epsilon_greedy.npy'
@@ -201,7 +204,7 @@ elif sys.argv[1] == 'softmax':
     q_file = 'q_softmax.npy'
     param_file = 'params_softmax.pickle'
 else:
-    print("Command Line Arguments are Invalid.")
+    print("Command line arguments are invalid.")
     sys.exit()
 
 # call train function with correct parameters given command line argument

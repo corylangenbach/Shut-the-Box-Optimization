@@ -10,6 +10,7 @@ https://medium.com/@cory.langenbach/reinforcement-learning-teaches-program-to-op
 Instructions for setting up the code in PyCharm:
 - Clone the repository
 - Create a new project in PyCharm
+- Add the cloned repository into the new project
 - Open a terminal within the PyCharm project
 - Navigate to the correct directory: cd Shut-the-Box-Optimization-master/
 - Install the required modules: pip install -r requirements.txt

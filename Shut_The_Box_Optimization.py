@@ -8,55 +8,68 @@ import sys
 # this class sets up the SHUT THE BOX environment
 class STB:
 
-    def __init__(self, n):
-        self.n = n      # number of tiles on game board: [1..n]
-        self.b = None   # game board (as a binary number)
-        self.d6 = None  # roll of die or dice
-        self.act_space = 2 ** self.n
-        self.obs_space = self.act_space * (2 * 6)
+    def __init__(self,  num_tiles):
+        self.num_tiles = num_tiles      # number of tiles on game board: [1..n]
+        self.board = None   # game board (as a binary number)
+        self.dice = None  # roll of die or dice
+        self.act_space = 2 ** self.num_tiles  # number of possible states of game: each tile can be flipped up or down
+        self.obs_space = self.act_space * (2 * 6)  # all possible states * possible dice rolls at each state
 
+    # returns a random dice roll for the current state
     def roll(self):
-        if self.score(self.b) <= 6:
+        if self.score(self.board) <= 6:
             return np.random.randint(1, 7)  # a single 6-sided die, rolled when current score is less than 6
         else:
             return sum(np.random.randint(1, 7, 2))  # the sum of 2 6-sided dice
 
+    # resets the board to initial state of all ones
     def reset(self):
-        self.b = (2 ** self.n) - 1
-        self.d6 = self.roll()
+        self.board = (2 ** self.num_tiles) - 1
+        self.dice = self.roll()
         return self.state()
 
+    # returns the action_space value, defined above
     def action_space(self):
         return self.act_space,
 
+    # returns the observation_space value, defined above
     def observation_space(self):
         return self.obs_space,
 
+    # the current state the game is in is found by multiplying the board state by the current roll
     def state(self):
-        return self.b * self.d6
+        return self.board * self.dice
 
+    # gets a random sample within the entire action space
     def sample(self):
         return np.random.randint(0, self.act_space)
 
+    # calculates the score of the board by summing up the tiles that are currently flipped up
+    # adds one to each tile since first tile has value '1' but it as position 0
     def score(self, board):
-        return sum([(x + 1) for x in range(self.n) if board & 2 ** x])
+        return sum([(x + 1) for x in range(self.num_tiles) if board & 2 ** x])
 
+    # preforms a move if it's legal, and returns the new state and score and if the game has ended
     def step(self, action):
         # if action is legal (tiles are up) and action matches roll of dice
-        if action & self.b == action and self.score(action) == self.d6:
+        if action & self.board == action and self.score(action) == self.dice:
             # update game board to reflect current action
-            self.b -= action
-            self.d6 = self.roll()
-            return self.state(), 0, self.b == 0
+            self.board -= action
+            self.dice = self.roll()
+            return self.state(), 0, self.board == 0
         else:
-            return self.state(), -self.score(self.b), True
+            # note: score is always negative (unless the game is over), so it increases as tiles are flipped down
+            return self.state(), -self.score(self.board), True
 
+    # converts the board into a readable binary for the user so they can interpret the moves the program takes
+    # this function is used when the user renders the program
     def __str__(self):
-        return str([(x + 1) for x in range(self.n) if self.b & 2 ** x])
+        return str([(x + 1) for x in range(self.num_tiles) if self.board & 2 ** x])
 
+    # prints the current board and dice roll after each step the program takes
     def render(self):
         print("current board: ", self)
-        print("dice roll: ", self.d6)
+        print("dice roll: ", self.dice)
 
 
 # saves the current q-table and parameters to the given files
@@ -120,7 +133,7 @@ def softmax_strategy(params, sampler, q_vals, actions):
 def train(strategy, q_file_name, params_file_name):
     try:
         x = 0
-        env = STB(n=10)
+        env = STB(num_tiles=10)
         observation_size = env.observation_space()[0]
         action_size = env.action_space()[0]
         actions = [n for n in range(action_size)]
@@ -143,7 +156,7 @@ def train(strategy, q_file_name, params_file_name):
 
             while not done:
                 # print current board and dice roll
-                #env.render()
+                # env.render()
 
                 # call to the strategy function given by user (epsilon_greedy or softmax) to get action
                 action = strategy(params, env.sample(), q[state], actions)
@@ -173,7 +186,7 @@ def train(strategy, q_file_name, params_file_name):
                         save(params, q, q_file_name, params_file_name)
 
                     # print final game board and dice roll
-                    #env.render()
+                    # env.render()
                     break
             params['episodes'] += 1
             x += 1

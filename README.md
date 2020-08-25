@@ -18,6 +18,9 @@ Instructions for setting up the code in PyCharm:
 - Install the required modules: pip install -r requirements.txt
 
 Set up the command line argument:
-- To the left of the run button, click on the Shut-the-Box-Optimization dropdown menu, and then on 'Edit Configurations...'
+- To the left of the run button, click 'Add Configuration...'
+- Click the '+' button in the upper left hand corner
+- Select 'Python'
+- In the 'Script path' window, click on the folder and navigate to the current script path (the cloned repository)
 - In the parameters window, type either 'epsilon_greedy' or 'softmax' depending on the strategy you want to use
 - The code should be ready to run!

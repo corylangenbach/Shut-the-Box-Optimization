@@ -24,3 +24,5 @@ Set up the command line argument:
 - In the 'Script path' window, click on the folder and navigate to the current script path (the cloned repository)
 - In the parameters window, type either 'epsilon_greedy' or 'softmax' depending on the strategy you want to use
 - The code should be ready to run!
+
+Note: If you want to see renderings of the dice roll and board for each step the program takes, uncomment 'env.render()', which appears twice in the code.

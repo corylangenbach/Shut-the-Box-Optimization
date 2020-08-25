@@ -20,5 +20,4 @@ Instructions for setting up the code in PyCharm:
 Set up the command line argument:
 - To the left of the run button, click on the Shut-the-Box-Optimization dropdown menu, and then on 'Edit Configurations...'
 - In the parameters window, type either 'epsilon_greedy' or 'softmax' depending on the strategy you want to use
-
 - The code should be ready to run!

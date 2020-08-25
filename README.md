@@ -14,4 +14,7 @@ Instructions for setting up the code in PyCharm:
 - Open a terminal within the PyCharm project
 - Navigate to the correct directory: cd Shut-the-Box-Optimization-master/
 - Install the required modules: pip install -r requirements.txt
+Set up the command line argument:
+- To the left of the run button, click on the Shut-the-Box-Optimization dropdown menu, and then on 'Edit Configurations...'
+- In the parameters window, type either 'epsilon_greedy' or 'softmax' depending on the strategy you want to use
 - The code should be ready to run!

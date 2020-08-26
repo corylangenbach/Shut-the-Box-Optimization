@@ -45,7 +45,7 @@ class STB:
         return np.random.randint(0, self.act_space)
 
     # calculates the score of the board by summing up the tiles that are currently flipped up
-    # adds one to each tile since first tile has value '1' but it as position 0
+    # adds one to each tile since the first tile has value '1' but is at position 0
     def score(self, board):
         return sum([(x + 1) for x in range(self.num_tiles) if board & 2 ** x])
 

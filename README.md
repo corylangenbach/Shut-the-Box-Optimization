@@ -21,7 +21,7 @@ Set up the command line argument:
 - To the left of the run button, click 'Add Configuration...'
 - Click the '+' button in the upper left hand corner
 - Select 'Python'
-- In the 'Script path' window, click on the folder and navigate to the current script path (the cloned repository)
+- In the 'Script path' window, click on the folder and navigate to the current script path (Shut_The_Box_Optimization.py in the cloned repository)
 - In the parameters window, type either 'epsilon_greedy' or 'softmax' depending on the strategy you want to use
 - The code should be ready to run!
 
